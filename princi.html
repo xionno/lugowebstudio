@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es" class="bg-brand-light text-brand-dark antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lugo Web Studio | La empresa #1 de marketing digital en Puerto Rico</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Bebas Neue', 'sans-serif'],
+                        serif: ['DM Serif Display', 'serif'],
+                        grotesk: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            light: '#F4F4F0',
+                            dark: '#1C1C1A',
+                            accent: '#C59B27',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* ===== BASE ===== */
+        body, html {
+            margin: 0; padding: 0;
+            background-color: #F4F4F0;
+            color: #1C1C1A;
+            overflow-x: hidden;
+            overscroll-behavior: none;
+        }
+        ::-webkit-scrollbar { display: none; }
+        * { scrollbar-width: none; }
+
+        html.lenis { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto !important; }
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis.lenis-stopped { overflow: hidden; }
+
+        /* ===== WEBGL ===== */
+        #webgl-container {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: 0; pointer-events: none;
+            opacity: .35; mix-blend-mode: multiply;
+        }
+
+        .z-content { z-index: 10; position: relative; }
+
+        /* ============================================================
+           HERO MINIMALISTA
+           ============================================================ */
+        .hero-min {
+            position: relative;
+            min-height: 100svh;
+            padding-top: 7.5rem;
+            background: #F4F4F0;
+            display: flex;
+            flex-direction: column;
+        }
+        .hero-min-inner {
+            flex: 1;
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 clamp(1.5rem, 5vw, 5rem);
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 15rem;
+            gap: clamp(3rem, 7vw, 8rem);
+            align-items: center;
+        }
+
+        /* --- Columna principal --- */
+        .hero-min-main {
+            max-width: 44rem;
+            padding: clamp(2rem, 6vh, 4rem) 0;
+        }
+
+        .hero-min-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: .85rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: .68rem;
+            font-weight: 500;
+            letter-spacing: .24em;
+            text-transform: uppercase;
+            color: rgba(28,28,26,.55);
+            margin: 0 0 2.25rem;
+        }
+        .hero-min-kicker::before {
+            content: '';
+            width: 1.75rem;
+            height: 1px;
+            background: #1C1C1A;
+            opacity: .4;
+        }
+
+        .hero-min-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 500;
+            font-size: clamp(2.5rem, 6vw, 5.5rem);
+            line-height: 1.03;
+            letter-spacing: -0.035em;
+            color: #1C1C1A;
+            margin: 0 0 1.75rem;
+        }
+        .hero-min-title em {
+            font-family: 'DM Serif Display', serif;
+            font-style: italic;
+            font-weight: 400;
+            letter-spacing: -0.04em;
+        }
+        .rotating-word {
+            display: inline-block;
+        }
+
+        .hero-min-lede {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(.98rem, 1.1vw, 1.08rem);
+            line-height: 1.65;
+            color: rgba(28,28,26,.6);
+            max-width: 34rem;
+            margin: 0 0 2.75rem;
+        }
+
+        .hero-min-actions {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.75rem;
+        }
+
+        .btn-solid {
+            display: inline-flex;
+            align-items: center;
+            gap: .7rem;
+            padding: .95rem 1.4rem;
+            background: #1C1C1A;
+            color: #F4F4F0;
+            border-radius: 9999px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            transition: background-color .3s ease, transform .3s ease;
+        }
+        .btn-solid:hover {
+            background: #C59B27;
+            transform: translateY(-2px);
+        }
+        .btn-solid svg { transition: transform .3s ease; }
+        .btn-solid:hover svg { transform: translateX(3px); }
+
+        .btn-text {
+            display: inline-flex;
+            align-items: center;
+            gap: .55rem;
+            padding: .5rem 0;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: #1C1C1A;
+            position: relative;
+        }
+        .btn-text::after {
+            content: '';
+            position: absolute;
+            left: 0; right: 1.4rem; bottom: 0;
+            height: 1px;
+            background: #1C1C1A;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform .4s cubic-bezier(.22,1,.36,1);
+        }
+        .btn-text:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        .btn-text svg { transition: transform .3s ease; }
+        .btn-text:hover svg { transform: translateX(3px); }
+
+        /* --- Columna lateral --- */
+        .hero-min-aside {
+            border-left: 1px solid rgba(28,28,26,.12);
+            padding: 1rem 0 1rem 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.25rem;
+            align-self: center;
+        }
+        .aside-item { display: flex; flex-direction: column; gap: .5rem; }
+        .aside-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: .6rem;
+            font-weight: 500;
+            letter-spacing: .26em;
+            text-transform: uppercase;
+            color: rgba(28,28,26,.45);
+        }
+        .aside-value {
+            font-family: 'Inter', sans-serif;
+            font-size: .9rem;
+            line-height: 1.5;
+            color: #1C1C1A;
+            font-weight: 400;
+        }
+
+        /* --- Fila inferior --- */
+        .hero-min-bottom {
+            border-top: 1px solid rgba(28,28,26,.12);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem clamp(1.5rem, 5vw, 5rem);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: .62rem;
+            font-weight: 500;
+            letter-spacing: .26em;
+            text-transform: uppercase;
+            color: rgba(28,28,26,.5);
+        }
+        .hero-min-bottom .scroll-cue {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            color: #1C1C1A;
+        }
+        .hero-min-bottom .scroll-cue span {
+            display: inline-block;
+            animation: scrollCue 2s ease-in-out infinite;
+        }
+        @keyframes scrollCue {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(4px); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .hero-min { padding-top: 6rem; }
+            .hero-min-inner {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+                align-items: start;
+            }
+            .hero-min-aside {
+                border-left: 0;
+                border-top: 1px solid rgba(28,28,26,.12);
+                padding: 2rem 0 0;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 2rem 3rem;
+                align-self: stretch;
+            }
+            .hero-min-aside .aside-item { flex: 1 1 auto; min-width: 10rem; }
+            .hero-min-bottom {
+                flex-wrap: wrap;
+                gap: .75rem 1.5rem;
+            }
+        }
+        @media (max-width: 520px) {
+            .hero-min-actions { gap: 1.25rem; flex-direction: column; align-items: flex-start; }
+            .btn-solid { width: 100%; justify-content: center; }
+            .hero-min-bottom { font-size: .55rem; letter-spacing: .2em; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .hero-min-bottom .scroll-cue span { animation: none !important; }
+        }
+    </style>
+</head>
+<body class="text-brand-dark bg-brand-light">
+
+    <!-- WebGL -->
+    <canvas id="webgl-container"></canvas>
+
+    <!-- ===== NAV ===== -->
+    <nav class="fixed top-0 left-0 w-full px-6 py-5 md:px-10 md:py-6 flex justify-between items-center z-50 bg-brand-light/80 text-brand-dark backdrop-blur-md border-b border-brand-dark/10">
+        <div class="h-14 w-56 overflow-hidden hover-link cursor-pointer" aria-label="Lugo Web Studio">
+            <img src="fotos/utility/logo.png" alt="Lugo Web Studio" class="h-14 w-56 object-cover object-center mix-blend-multiply">
+        </div>
+        <div class="hidden md:flex gap-10 font-grotesk text-xs uppercase tracking-[0.2em] font-bold">
+            <a href="#agencia" class="hover-link relative group overflow-hidden">
+                <span class="block transition-transform duration-300 group-hover:-translate-y-full">Agencia</span>
+                <span class="block absolute inset-0 transition-transform duration-300 translate-y-full text-brand-accent group-hover:translate-y-0">Agencia</span>
+            </a>
+            <a href="#ceo" class="hover-link relative group overflow-hidden">
+                <span class="block transition-transform duration-300 group-hover:-translate-y-full">CEO & Fundador</span>
+                <span class="block absolute inset-0 transition-transform duration-300 translate-y-full text-brand-accent group-hover:translate-y-0">CEO & Fundador</span>
+            </a>
+            <a href="#casos" class="hover-link relative group overflow-hidden">
+                <span class="block transition-transform duration-300 group-hover:-translate-y-full">Casos</span>
+                <span class="block absolute inset-0 transition-transform duration-300 translate-y-full text-brand-accent group-hover:translate-y-0">Casos</span>
+            </a>
+            <a href="#ejemplos" class="hover-link relative group overflow-hidden">
+                <span class="block transition-transform duration-300 group-hover:-translate-y-full">Diseños</span>
+                <span class="block absolute inset-0 transition-transform duration-300 translate-y-full text-brand-accent group-hover:translate-y-0">Diseños</span>
+            </a>
+            <a href="#precios" class="hover-link relative group overflow-hidden">
+                <span class="block transition-transform duration-300 group-hover:-translate-y-full">Precios</span>
+                <span class="block absolute inset-0 transition-transform duration-300 translate-y-full text-brand-accent group-hover:translate-y-0">Precios</span>
+            </a>
+            <a href="#contacto" class="hover-link relative group overflow-hidden">
+                <span class="block transition-transform duration-300 group-hover:-translate-y-full">Contacto</span>
+                <span class="block absolute inset-0 transition-transform duration-300 translate-y-full text-brand-accent group-hover:translate-y-0">Contacto</span>
+            </a>
+        </div>
+        <div class="font-grotesk text-xs uppercase tracking-widest md:hidden hover-link font-bold">Menu</div>
+    </nav>
+
+    <main class="z-content relative">
+
+        <!-- ============================================================
+             HERO MINIMALISTA
+             ============================================================ -->
+        <section id="inicio" class="hero-min w-full">
+
+            <div class="hero-min-inner">
+
+                <!-- Columna principal -->
+                <div class="hero-min-main">
+
+                    <h1 class="hero-min-title hero-fade">
+                        Más clientes para<br>
+                        tu <span class="rotating-word" aria-live="polite">negocio</span>, <em>sin complicarte con la tecnología.</em>
+                    </h1>
+
+                    <p class="hero-min-lede hero-fade">
+                        Diseñamos y gestionamos la presencia digital de negocios locales: contenido profesional, visibilidad en Google, campañas publicitarias y herramientas para convertir consultas en clientes.
+                    </p>
+
+                    <div class="hero-min-actions hero-fade">
+                        <a href="#contacto" class="btn-solid hover-link">
+                            <span>Agenda tu cotización gratis</span>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M5 12h14M13 6l6 6-6 6"/>
+                            </svg>
+                        </a>
+                        <a href="#casos" class="btn-text hover-link">
+                            <span>Como quedaria mi trabajo?</span>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M5 12h14M13 6l6 6-6 6"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section id="agencia" class="min-h-[150vh] relative bg-brand-light z-10 pt-40 pb-20">
+            <div class="sticky top-0 min-h-screen h-auto flex items-center justify-center px-6 py-24 md:px-20 md:py-32 overflow-visible">
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-brand-light/90 pointer-events-none"></div>
+                <h2 id="manifesto-text" class="font-grotesk text-2xl md:text-4xl lg:text-6xl font-bold leading-tight md:leading-[1.1] tracking-tighter text-brand-dark/10 max-w-7xl relative z-10">
+                    Sabemos que llevar un negocio ya es bastante. Por eso en Lugo Web Studio nos encargamos de toda la parte digital por ti. Te grabamos los videos, te hacemos las fotos, te ponemos en Google, te armamos la página, te llevamos las redes, te montamos los anuncios, te contestamos los mensajes aunque estés cerrado, te organizamos los clientes y las citas, y te resolvemos lo técnico cuando algo falla. Todo en un solo lugar y sin palabras raras. Tú solo atiende. Del internet nos encargamos nosotros.
+                </h2>
+            </div>
+        </section>
+
+        <section id="ejemplos" class="py-20 px-4 md:px-8 bg-brand-light relative z-20 border-t border-brand-dark/10">
+            <div class="mx-auto max-w-5xl columns-2 md:columns-3 gap-4 [column-gap:1rem] [column-width:220px]">
+                <img src="fotos/Ejemplos/ej1.png" alt="Ejemplo de diseño 1" class="mb-4 w-full h-auto block rounded-2xl border border-brand-dark/10 bg-white/40 shadow-sm break-inside-avoid">
+                <img src="fotos/Ejemplos/ej2.png" alt="Ejemplo de diseño 2" class="mb-4 w-full h-auto block rounded-2xl border border-brand-dark/10 bg-white/40 shadow-sm break-inside-avoid">
+                <img src="fotos/Ejemplos/ej3.png" alt="Ejemplo de diseño 3" class="mb-4 w-full h-auto block rounded-2xl border border-brand-dark/10 bg-white/40 shadow-sm break-inside-avoid">
+                <img src="fotos/Ejemplos/ej4.png" alt="Ejemplo de diseño 4" class="mb-4 w-full h-auto block rounded-2xl border border-brand-dark/10 bg-white/40 shadow-sm break-inside-avoid">
+                <img src="fotos/Ejemplos/ej5.png" alt="Ejemplo de diseño 5" class="mb-4 w-full h-auto block rounded-2xl border border-brand-dark/10 bg-white/40 shadow-sm break-inside-avoid">
+                <img src="fotos/Ejemplos/ej6.png" alt="Ejemplo de diseño 6" class="mb-4 w-full h-auto block rounded-2xl border border-brand-dark/10 bg-white/40 shadow-sm break-inside-avoid">
+            </div>
+        </section>
+
+        <section id="precios" class="py-32 px-6 md:px-16 bg-brand-light relative z-20 border-t border-brand-dark/10">
+            <div class="mb-20 flex flex-col md:flex-row md:items-end justify-between">
+                <div>
+                    <h3 class="font-display text-6xl md:text-8xl uppercase leading-none">Precios</h3>
+                </div>
+                <p class="font-sans text-brand-dark/60 text-sm max-w-sm mt-6 md:mt-0 font-medium">
+                    Soluciones claras para que te encuentren, te llamen y te elijan.
+                </p>
+            </div>
+
+            <div class="mb-12">
+                <p class="font-grotesk text-sm uppercase tracking-[0.35em] text-brand-accent font-bold mb-6">Más clientes para tu negocio</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                <div class="p-8 rounded-3xl border border-brand-dark/10 bg-white/40 backdrop-blur-sm flex flex-col justify-between">
+                    <div>
+                        <span class="font-grotesk text-xs uppercase tracking-[0.3em] text-brand-accent font-bold block mb-3">01 // Que te encuentren</span>
+                        <p class="font-sans text-sm text-brand-dark/60 mb-6">Para negocios que casi no salen en internet.</p>
+                        <p class="font-display text-3xl uppercase mb-1">$497–$797 <span class="text-base font-sans">/mes</span></p>
+                        <ul class="space-y-3 font-sans text-sm text-brand-dark/80 mt-8">
+                            <li class="flex items-start gap-3">✓ Te ponemos en Google y en el mapa</li>
+                            <li class="flex items-start gap-3">✓ Página para que la gente te contacte</li>
+                            <li class="flex items-start gap-3">✓ Botón de WhatsApp</li>
+                            <li class="flex items-start gap-3">✓ Publicaciones en redes sociales</li>
+                            <li class="flex items-start gap-3">✓ Ayuda para conseguir buenas reseñas</li>
+                            <li class="flex items-start gap-3">✓ Reporte simple cada mes</li>
+                        </ul>
+                        <p class="font-sans text-sm text-brand-dark/60 mt-8"><strong>Para quién:</strong> barberías, restaurantes, talleres, spas y tiendas pequeñas.</p>
+                    </div>
+                </div>
+
+                <div class="p-8 rounded-3xl border-2 border-brand-accent bg-brand-dark text-brand-light flex flex-col justify-between relative overflow-hidden shadow-2xl">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-brand-accent/20 rounded-full blur-2xl"></div>
+                    <div class="relative z-10">
+                        <span class="font-grotesk text-xs uppercase tracking-[0.3em] text-brand-accent font-bold block mb-3">02 // Que te llamen</span>
+                        <p class="font-sans text-sm text-brand-light/70 mb-6">Para negocios que ya existen pero quieren más clientes.</p>
+                        <p class="font-display text-3xl uppercase mb-1 text-brand-light">$997–$1,997 <span class="text-base font-sans">/mes</span></p>
+                        <ul class="space-y-3 font-sans text-sm text-brand-light/90 mt-8">
+                            <li class="flex items-start gap-3">✓ Todo lo del paquete anterior</li>
+                            <li class="flex items-start gap-3">✓ Anuncios para que más gente de tu zona te vea</li>
+                            <li class="flex items-start gap-3">✓ Página para que te llamen o te escriban</li>
+                            <li class="flex items-start gap-3">✓ Respuestas automáticas por WhatsApp</li>
+                            <li class="flex items-start gap-3">✓ Seguimiento a los clientes que preguntan</li>
+                            <li class="flex items-start gap-3">✓ Recordatorios para las citas</li>
+                            <li class="flex items-start gap-3">✓ Publicaciones y contenido cada mes</li>
+                            <li class="flex items-start gap-3">✓ Reporte con llamadas, mensajes y clientes nuevos</li>
+                        </ul>
+                        <p class="font-sans text-sm text-brand-light/70 mt-8"><strong>Para quién:</strong> clínicas, consultorios, inmobiliarias y servicios profesionales.</p>
+                    </div>
+                </div>
+
+                <div class="p-8 rounded-3xl border border-brand-dark/10 bg-white/40 backdrop-blur-sm flex flex-col justify-between">
+                    <div>
+                        <p class="font-sans text-sm text-brand-dark/60 mb-6">Para negocios que quieren ser los número uno de su zona.</p>
+                        <p class="font-display text-3xl uppercase mb-1">$2,500–$4,500 <span class="text-base font-sans">/mes</span></p>
+                        <ul class="space-y-3 font-sans text-sm text-brand-dark/80 mt-8">
+                            <li class="flex items-start gap-3">✓ Todo lo de los paquetes anteriores</li>
+                            <li class="flex items-start gap-3">✓ Varios anuncios al mismo tiempo</li>
+                            <li class="flex items-start gap-3">✓ Fotos y videos de tu negocio</li>
+                            <li class="flex items-start gap-3">✓ Sistema completo para atender y dar seguimiento a clientes</li>
+                            <li class="flex items-start gap-3">✓ Reportes detallados y reunión cada mes</li>
+                            <li class="flex items-start gap-3">✓ Un equipo pendiente de tu negocio</li>
+                        </ul>
+                        <p class="font-sans text-sm text-brand-dark/60 mt-8"><strong>Para quién:</strong> negocios grandes, franquicias, clínicas grandes y concesionarios.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-32 px-6 md:px-16 bg-brand-light relative z-20 border-t border-brand-dark/10">
+            <div class="mb-20">
+                <p class="font-grotesk text-brand-accent text-sm tracking-[0.4em] uppercase mb-4 font-bold">04 // Capacidades</p>
+                <h3 class="font-display text-6xl md:text-8xl uppercase leading-none">Servicios</h3>
+            </div>
+
+            <div class="w-full" id="services-list">
+                <div class="service-item py-10 border-t border-brand-dark/10 hover-link group">
+                    <h4 class="font-display text-4xl md:text-6xl uppercase group-hover:text-brand-accent transition-colors duration-300">01 // Visibilidad local</h4>
+                    <p class="mt-4 font-sans text-brand-dark/60 font-medium max-w-2xl text-sm">Posicionamos tu negocio donde tus clientes ya están buscando: Google, mapas, redes sociales y una página web clara.</p>
+                    <ul class="mt-6 space-y-3 font-sans text-brand-dark/60 font-medium max-w-2xl text-sm">
+                        <li>• Perfil de negocio y ubicación actualizados</li>
+                        <li>• Página web con servicios, información y contacto</li>
+                        <li>• Contenido constante para mantener tu marca activa</li>
+                    </ul>
+                </div>
+                <div class="service-item py-10 border-t border-brand-dark/10 hover-link group">
+                    <h4 class="font-display text-4xl md:text-6xl uppercase group-hover:text-brand-accent transition-colors duration-300">02 // Captación de clientes</h4>
+                    <p class="mt-4 font-sans text-brand-dark/60 font-medium max-w-2xl text-sm">Creamos campañas y puntos de contacto pensados para generar llamadas, mensajes y solicitudes de personas en tu zona.</p>
+                    <ul class="mt-6 space-y-3 font-sans text-brand-dark/60 font-medium max-w-2xl text-sm">
+                        <li>• Anuncios segmentados para clientes locales</li>
+                        <li>• Botones de llamada y WhatsApp visibles</li>
+                        <li>• Respuestas automáticas para no perder consultas</li>
+                    </ul>
+                </div>
+                <div class="service-item py-10 border-t border-brand-dark/10 hover-link group">
+                    <h4 class="font-display text-4xl md:text-6xl uppercase group-hover:text-brand-accent transition-colors duration-300">03 // Seguimiento y crecimiento</h4>
+                    <p class="mt-4 font-sans text-brand-dark/60 font-medium max-w-2xl text-sm">Organizamos la atención después del primer contacto para que tu equipo responda mejor, genere confianza y mantenga la relación con cada cliente.</p>
+                    <ul class="mt-6 space-y-3 font-sans text-brand-dark/60 font-medium max-w-2xl text-sm">
+                        <li>• Sistema para solicitar y cuidar reseñas</li>
+                        <li>• Recordatorios y mensajes para fomentar el regreso</li>
+                        <li>• Registro organizado de contactos y oportunidades</li>
+                        <li>• Reportes mensuales con resultados claros</li>
+                        <li>• Soporte para mantener las herramientas funcionando</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-16 max-w-3xl border-l-2 border-brand-accent pl-6 md:pl-8">
+                <p class="font-display text-3xl md:text-5xl uppercase leading-tight">Tú sigue atendiendo tu negocio. Del internet nos encargamos nosotros.</p>
+            </div>
+        </section>
+
+        <section id="ceo" class="py-32 px-6 md:px-16 bg-brand-dark text-brand-light relative z-20 border-t border-brand-dark/10">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-12 md:gap-20 items-center">
+                <div class="relative max-w-md mx-auto md:mx-0 w-full">
+                    <div class="absolute -inset-3 border border-brand-accent/40 translate-x-3 translate-y-3"></div>
+                    <img src="fotos/CEO/ceo1.jpg" alt="CEO y fundador de Lugo Web Studio" class="relative w-full aspect-[4/5] object-cover object-top">
+                </div>
+                <div>
+                    <p class="font-grotesk text-brand-accent text-sm tracking-[0.4em] uppercase mb-5 font-bold">CEO & Fundador</p>
+                    <h2 class="font-display text-6xl md:text-8xl uppercase leading-none mb-8">isaias Lugo Vega.</h2>
+                    <p class="font-sans text-brand-light/70 text-base md:text-lg leading-relaxed max-w-2xl mb-6">
+                        Lugo Web Studio nace para ayudar a los negocios locales a verse profesionales, conseguir más clientes y crecer en internet sin complicarse con la tecnología.
+                    </p>
+                    <p class="font-sans text-brand-light/70 text-base md:text-lg leading-relaxed max-w-2xl">
+                        Cada proyecto se trabaja con atención cercana, ideas claras y soluciones pensadas para que tu negocio avance de verdad.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto" class="py-32 px-6 md:px-16 bg-brand-light relative z-20 border-t border-brand-dark/10">
+            <div class="max-w-4xl mx-auto text-center">
+                <p class="font-grotesk text-brand-accent text-sm tracking-[0.4em] uppercase mb-4 font-bold">07 // Contacto</p>
+                <h3 class="font-display text-6xl md:text-8xl uppercase leading-none mb-8">Hablemos.</h3>
+                <p class="font-sans text-brand-dark/60 text-lg mb-10 max-w-2xl mx-auto">
+                    ¿Listo para llevar tu marca al siguiente nivel? Escríbenos y diseñemos juntos algo extraordinario.
+                </p>
+                <a href="mailto:hola@lugowebstudio.com" class="inline-flex items-center justify-center min-h-[3.4rem] px-8 rounded-full bg-brand-accent text-brand-dark font-grotesk text-sm font-bold uppercase tracking-[0.18em] hover:bg-brand-dark hover:text-brand-light transition-colors duration-300">
+                    hola@lugowebstudio.com
+                </a>
+            </div>
+        </section>
+
+        <footer class="py-10 px-6 md:px-16 bg-brand-dark text-brand-light relative z-20">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="font-display text-3xl tracking-wide">LUGO<span class="text-brand-accent">.</span></div>
+                <p class="font-grotesk text-xs uppercase tracking-[0.2em] text-brand-light/50">© 2026 Lugo Web Studio. Puerto Rico.</p>
+                <div class="flex gap-6 font-grotesk text-xs uppercase tracking-[0.2em]">
+                    <a href="#" class="hover:text-brand-accent transition-colors">Instagram</a>
+                    <a href="#" class="hover:text-brand-accent transition-colors">Facebook</a>
+                    <a href="#" class="hover:text-brand-accent transition-colors">WhatsApp</a>
+                    <a href="#" class="hover:text-brand-accent transition-colors">LinkedIn</a>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script>
+        /* LENIS */
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smooth: true,
+        });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        /* HERO FADE-IN — muy discreto */
+        gsap.registerPlugin(ScrollTrigger);
+        window.addEventListener('load', () => {
+            gsap.from('.hero-fade', {
+                y: 14,
+                opacity: 0,
+                duration: 0.9,
+                stagger: 0.12,
+                ease: 'power2.out',
+                delay: 0.15
+            });
+        });
+
+        /* PALABRAS DEL HERO */
+        const rotatingWord = document.querySelector('.rotating-word');
+        const rotatingWords = ['negocio', 'restaurante', 'clínica', 'spa', 'barberia', 'taller', 'estudio'];
+        let rotatingWordIndex = 0;
+        if (rotatingWord) {
+            setInterval(() => {
+                gsap.to(rotatingWord, {
+                    opacity: 0,
+                    y: -8,
+                    duration: 0.25,
+                    onComplete: () => {
+                        rotatingWordIndex = (rotatingWordIndex + 1) % rotatingWords.length;
+                        rotatingWord.textContent = rotatingWords[rotatingWordIndex];
+                        gsap.fromTo(rotatingWord,
+                            { opacity: 0, y: 8 },
+                            { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }
+                        );
+                    }
+                });
+            }, 2500);
+        }
+
+        /* MANIFESTO */
+        const manifesto = document.getElementById('manifesto-text');
+        if (manifesto) {
+            gsap.to(manifesto, {
+                scrollTrigger: {
+                    trigger: '#agencia',
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    scrub: 1,
+                },
+                color: '#1C1C1A',
+                duration: 1,
+            });
+        }
+
+        /* CANVAS decorativo muy tenue */
+        const canvas = document.getElementById('webgl-container');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let w, h;
+            function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+            window.addEventListener('resize', resize);
+            resize();
+            function draw() {
+                ctx.clearRect(0, 0, w, h);
+                const grd = ctx.createRadialGradient(w * 0.7, h * 0.3, 0, w * 0.7, h * 0.3, w * 0.6);
+                grd.addColorStop(0, 'rgba(197,155,39,0.035)');
+                grd.addColorStop(1, 'rgba(244,244,240,0)');
+                ctx.fillStyle = grd;
+                ctx.fillRect(0, 0, w, h);
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+    </script>
+</body>
+</html>
